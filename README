@@ -1,0 +1,29 @@
+Identification
+==============
+
+Identification keeps track of who creates/updates records in the database. It
+does so by adding the ID of the currently logged in user to the params hash for
+the record being created or updated (e.g. params[:person]). If the record has
+created_by and/or updated_by attributes, they are set the user's ID.
+
+It also adds 'identities' to the schema table definition to make adding
+identities to a table as simple as placing 't.identities' to your table
+definition.
+
+Usage
+=======
+
+To use Identification, simply add:
+
+    before_filter :identify
+
+to any controllers you wish to use Identification with.
+
+If the current user isn't in the session, or the models aren't using identity
+columns, records will still be saved as expected.
+
+It assumes that the currently logged in user's ID is stored in session hash as
+:current_user_id. You can overwrite the method fetch_identity to get the ID
+from somewhere else.
+
+Copyright (c) 2010 Adam Hutchison, released under the MIT license
