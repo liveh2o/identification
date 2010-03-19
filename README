@@ -22,7 +22,9 @@ to any controllers you wish to use Identification with.
 If the current user isn't in the session, or the models aren't using identity
 columns, records will still be saved as expected.
 
-It assumes that the currently logged in user's ID is stored in session hash as
+Identification provides :before_identify and :after_identify callbacks so you can hook into the identification chain.
+
+Identification assumes that the currently logged in user's ID is stored in session hash as
 :current_user_id. You can overwrite the method fetch_identity to get the ID
 from somewhere else.
 

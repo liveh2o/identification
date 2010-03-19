@@ -50,11 +50,13 @@ module Identification
   end
   
   module Identity
-    def self.included(base)      
-      base.attr_protected :created_by, :updated_by
-      base.before_save :_identify
+    def self.included(klass)
+      klass.define_callbacks :before_identify, :after_identify
+      
+      klass.attr_protected :created_by, :updated_by
+      klass.before_save :_identify
 
-      base.send :include, InstanceMethods
+      klass.send :include, InstanceMethods
     end
 
     module InstanceMethods
@@ -65,12 +67,14 @@ module Identification
         
       private
         def _identify
+          callback :before_identify
           if new_record?
             write_attribute('created_by', @_identity) if respond_to?(:created_by)
             write_attribute('updated_by', @_identity) if respond_to?(:updated_by)
           elsif !partial_updates? || changed?
             write_attribute('updated_by', @_identity) if respond_to?(:updated_by)
           end
+          callback :after_identify
         end
     end
   end
