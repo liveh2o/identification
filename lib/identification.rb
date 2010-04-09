@@ -58,6 +58,10 @@ module Identification
     end
 
     module InstanceMethods
+      def identified?
+        @_identity.present?
+      end
+
       protected
         def _identity=(id)
           @_identity = id
