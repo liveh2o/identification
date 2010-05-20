@@ -4,10 +4,10 @@ Identification
 Identification keeps track of who creates/updates records in the database. It
 does so by adding the ID of the currently logged in user to the params hash for
 the record being created or updated (e.g. params[:person]). If the record has
-created_by and/or updated_by attributes, they are set the user's ID.
+created_by and/or updated_by attributes, they are set to the user's ID.
 
 It also adds 'identities' to the schema table definition to make adding
-identities to a table as simple as placing 't.identities' to your table
+identities to a table as simple as placing 't.identities' in your table
 definition.
 
 Usage
@@ -22,14 +22,14 @@ to any controllers you wish to use Identification with.
 If the current user isn't in the session, or the models aren't using identity
 columns, records will still be saved as expected.
 
+Identification assumes that the currently logged in user's ID is stored in session hash as
+:current_user_id. You can overwrite the method fetch_identity to get the ID
+from somewhere else.
+
 Identification provides :before_identify and :after_identify callbacks so you
 can hook into the identification chain.
 
 Identification also adds an identified? method to all ActiveRecord::Base objects
-which returns true if Identification has add an identity to the object.
-
-Identification assumes that the currently logged in user's ID is stored in session hash as
-:current_user_id. You can overwrite the method fetch_identity to get the ID
-from somewhere else.
+which returns true if Identification has added an identity to the object.
 
 Copyright (c) 2010 Adam Hutchison, released under the MIT license
