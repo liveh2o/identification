@@ -52,8 +52,7 @@ module Identification
   module Identity
     def self.included(klass)
       klass.define_callbacks :before_identify, :after_identify
-      klass.attr_protected :created_by, :updated_by
-      klass.before_save :_identify
+      klass.before_save :_identify, :if => :identified?
       klass.send :include, InstanceMethods
     end
 
