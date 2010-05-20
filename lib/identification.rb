@@ -20,9 +20,11 @@ module Identification
             params[key] = add_identity_to_params(key,params[key])
             params[key][:_identity] = fetch_identity
           elsif params.include?(controller_name.to_sym)
-            params[controller_name.to_sym].each_value do |param|
-              param = add_identity_to_params(key,param)
-              param[:_identity] = fetch_identity
+            if params[controller_name.to_sym].is_a?(Hash)
+              params[controller_name.to_sym].each_value do |param|
+                param = add_identity_to_params(key,param)
+                param[:_identity] = fetch_identity
+              end
             end
           end
         end
